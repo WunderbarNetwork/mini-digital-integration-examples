@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mini Digital SDK - ESM Example</title>
+</head>
+<body>
+  <button type="button" id="myButton">Send Interaction Event</button>
+
+  <script type="module">
+    // Import the ESM-compatible library from the CDN
+    import { EventTrackingService, EventTrackingConfig } from "https://cdn.mini.digital/lib/js/v1.4/mini-digital-sdk.min.mjs";
+
+    // Mini Digital SDK will by default send events to the production endpoint.
+    // Given this is not a production app, we will override the URL to go to a local sandbox instead.
+    // See: https://github.com/WunderbarNetwork/mini-digital-event-sink
+    EventTrackingConfig.miniDigitalUrl = "http://localhost:3333";
+  
+    // Send the event on button click
+    document.getElementById("myButton").addEventListener("click", () => {
+      EventTrackingService.postEvent({
+        eventName: "button_clicked",
+        eventCategory: "interaction_event",
+        eventSource: "MyHtmlPage.Button",
+        anonymousUser: true,
+      });
+    });
+  </script>
+</body>
+</html>

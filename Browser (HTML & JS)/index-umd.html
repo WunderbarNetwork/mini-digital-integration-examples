@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Digital SDK - UMD Example</title>
+</head>
+<body>
+  <button type="button" id="myButton">Send Interaction Event</button>
+
+  <!-- Import the UMD-compatible library from the CDN -->
+  <script type="text/javascript" src="https://cdn.mini.digital/lib/js/v1.4/mini-digital-sdk.min.umd.js" defer onload="afterLibraryLoaded()"></script>
+
+  <script type="text/javascript">
+    // Function to execute after the UMD library has loaded
+    function afterLibraryLoaded() {
+      // Mini Digital SDK will by default send events to the production endpoint.
+      // Given this is not a production app, we will override the URL to go to a local sandbox instead.
+      // See: https://github.com/WunderbarNetwork/mini-digital-event-sink
+      window.MiniDigital.EventTrackingConfig.miniDigitalUrl = "http://localhost:3333";
+
+      // Send the event on button click
+      document.getElementById("myButton").addEventListener("click", () => {
+        // The Mini Digital SDK "lives" in the global `window.MiniDigital` object
+        window.MiniDigital.EventTrackingService.postEvent({
+          eventName: "button_clicked",
+          eventCategory: "interaction_event",
+          eventSource: "MyHtmlPage.Button",
+          anonymousUser: true,
+        });
+      });
+    }
+  </script>
+</body>
+</html>
